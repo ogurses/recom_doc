@@ -20,6 +20,3 @@ Judith Hauck, Özgür Gürses
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
