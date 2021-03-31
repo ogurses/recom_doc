@@ -1,1 +1,1 @@
-Documentation for RECOM2
+Documentation for REcoM2
