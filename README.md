@@ -1,1 +1,1 @@
-# recom_doc
+Documentation for RECOM2
