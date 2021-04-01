@@ -8,8 +8,8 @@ Welcome to REcoM2 Documentation!
 
 
 Authors
--------
-Judith Hauck, Özgür Gürses
+   -------
+   Judith Hauck, Özgür Gürses
 
 .. toctree::
    :maxdepth: 2
