@@ -8,13 +8,18 @@ Welcome to REcoM2 Documentation!
 
 
 Authors
-   -------
+-------
+
    Judith Hauck, Özgür Gürses
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   intro
+   model
+   people
 
 
 Indices and tables
