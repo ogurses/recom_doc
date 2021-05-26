@@ -18,7 +18,6 @@ Authors
    :caption: Contents:
 
    intro
-   model
    people
 
 
