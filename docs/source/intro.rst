@@ -582,8 +582,345 @@ in Eq. \ref{eq:p_{phy}}, Eq. \ref{eq:r_{phy}} and Eq. \ref{eq:g}, respectively. 
 calculated in units of nitrogen biomass and converted to :math:`CaCO_3`
 using the intracellular :math:`CaCO_3`:N ratio (:math:`q^{CaCO_3:N}_{phy}`). 
 
+Heterotrophs
+============
+.. _sec_het:
+
+Nitrogen pool (:math:`\mathrm{N}_{het}`)
+----------------------------------------
+Heterotrophic zooplankton increase their nitrogen pool via grazing,
+and loose nitrogen through excretion of :math:`\mathrm{DON}` and a quadratic mortality term:
+
+.. math::
+   \label{hetN}
+   \begin{split}
+   S(\mathrm{N}_{het}) = &\; G \cdot \gamma - m_{het} \cdot \mathrm{N}_{het}^2 -
+   \epsilon^N_{het} \cdot \mathrm{N}_{het} 
+   \end{split}
+
+A quadratic term is used for the mortality of heterotrophs (:math:`m_{het} \cdot \mathrm{N}_{het}^2`), and the
+excretion rate :math:`\epsilon^{N}_{het}` transfers heterotrophic nitrogen
+directly to the :math:`\mathrm{DON}` pool. 
+The grazing efficiency :math:`\gamma` determines how much of the grazed
+phytoplankton is built into heterotrophic biomass. We assume that
+sloppy feeding and the formation of feces transfer
+the remainder of the grazed phytoplankton directly to detritus.
+
+The grazing on nanophytoplankton and diatoms is defined as:
+
+.. math::
+   \label{eq:G}
+   \begin{split}
+   G = \xi \cdot \frac{(\mathrm{N}_{phy} + \mathrm{N}_{dia}^{'})^2}{\varphi_{1} + (\mathrm{N}_{phy}
+   + \mathrm{N}_{dia}^{'})^2} \cdot f_{T} \cdot \mathrm{N}_{het} 
+   \end{split}
+
+The grazing rate is calculated from a constant maximum grazing rate
+(:math:`\xi`) by multiplication with a sigmoidal dependency of nutritional
+intake to resource density with half-saturation constant
+:math:`\varphi_{1}`. It depends on temperature following the same
+relationship as for phytoplankton growth (:math:`f_{T}`).
+:math:`\mathrm{N}_{dia}'` encompasses a preference term for grazing on diatoms,
+relative to that on nanophytoplankton:
+
+.. math::
+   \label{eq:Ndia}
+   \begin{split}
+   \mathrm{N}_{dia}^{'} = \tau \cdot \frac{ \mathrm{N}_{dia}^2}{\varphi_{2} +  \mathrm{N}_{dia}^2} \cdot \mathrm{N}_{dia}
+   \end{split}
+
+
+Here, :math:`\tau` is the maximum diatom preference and is smaller than one,
+which implies that zooplankton grazes preferably on nanophytoplankton;
+the effective grazing preference is allowed to vary with diatom
+biomass, with :math:`\varphi_{2}` being the half saturation parameters for 
+grazing preference of diatoms. :math:`\varphi_{2}=0` implies a constant
+preference.
+
+
+The relative contributions of grazing on nanophytoplankton and on
+diatoms to the total grazing flux are calculated by their respective
+proportion to the total zooplankton food resource.  
+
+.. math::
+   \label{eq:Gphy}
+   \begin{split}
+   G_{phy} = G \cdot \frac{\mathrm{N}_{phy}}{ \mathrm{N}_{phy} + \mathrm{N}_{dia}^{'}} 
+   \end{split}
+
+.. math::
+   \label{eq:Gdia}
+   \begin{split}
+   G_{dia} = G \cdot \frac{\mathrm{N}_{dia}^{'}}{ \mathrm{N}_{phy} + \mathrm{N}_{dia}^{'}} 
+   \end{split}
+
+Carbon pool (:math:`\mathrm{C}_{het}`)
+--------------------------------------
+
+The heterotrophic carbon biomass is a balance between carbon uptake
+via grazing and carbon loss via mortality, carbon excretion and
+respiration. 
+
+.. math::
+   \label{eq:hetC}
+   \begin{split}
+   S(\mathrm{C}_{het}) = &\; \left( \frac{1}{q_{phy}} \cdot  G_{phy}  + \frac{1}{q_{dia}} \cdot G_{dia} \right) \cdot \gamma - \frac{1}{q_{het}} \cdot m_{het}  \cdot \mathrm{N}_   {het}^2
+   \\ 
+    &\; - \epsilon^C_{het} \cdot \mathrm{C}_{het} - r_{het} \cdot \mathrm{C}_{het} 
+   \end{split}
+
+The grazing flux in terms of nitrogen biomass is converted to carbon
+biomass using the respective intracellular N:C ratios
+(:math:`q_{phy}` and :math:`q_{dia}`). Sloppy feeding causes some of
+the grazed phytoplankton to be transferred directly to the detritus
+pool, as determined by the grazing efficiency :math:`\gamma`. The remainder
+is built into heterotropic biomass. The quadratic mortality flux
+(:math:`m_{het}  \cdot \mathrm{N}_{het}^2`), which causes carbon to be lost to the
+detritus compartment, is converted to carbon using the intracellular
+heterotrophic N:C ratio (:math:`q_{het}`). 
+When the C:N ratio in heterotrophs (:math:`q^{C:N}_{het}` = 1/:math:`q_{het}`)  exceeds the Redfield ratio,
+heterotrophic respiration is assumed to drive the ratio back 
+towards Redfield, with a time-scale :math:`\kappa_{het}`:  
+
+.. math::
+   r_{het} = \left\{ \begin{array}{lll}
+   f_T \cdot (q^{C:N}_{het} - q^{C:N}_{Redfield}) / \kappa_{het} & 
+   \mathrm{if} & q^{C:N}_{het} > q^{C:N}_{Redfield} \\
+   0 & \mathrm{if} & q^{C:N}_{het} \le q^{C:N}_{Redfield}
+   \end{array} \right.
+
+Detritus
+========
+.. _sec_det:
+
+\paragraph{Nitrogen pool (:math:`\mathrm{N}_{det}`)}
+Losses of phytoplankton nitrogen due to aggregation, mortality and
+sloppy feeding have to pass the :math:`\mathrm{N}_{det}` compartment before being
+degraded to :math:`\mathrm{DON}`, which is the only loss term for detrital
+nitrogen.
+
+.. math::
+   \label{detN}
+   \begin{split}
+   S(\mathrm{N}_{det}) = &\; G \cdot (1 - \gamma) + g \cdot (\mathrm{N}_{phy} + \mathrm{N}_{dia}) +
+   m_{het}  \cdot \mathrm{N}_{het}^2 - \rho_{PON} \cdot f_T \cdot \mathrm{N}_{det} 
+   \end{split}
+
+See section \ref{sec:het} for a definition of the grazing flux :math:`G`,
+the grazing efficiency :math:`\gamma` and the zooplankton mortality flux (:math:`m_{het} \cdot
+\mathrm{N}_{het}^2`). The aggregation rate :math:`g` is defined
+in Eq. \ref{eq:g}. Degradation of :math:`N_{det}` to DON is based on a constant degradation rate (:math:`\rho_{PON}`)
+and a temperature dependency (:math:`f_T`, Eq. \ref{eq:arr}).
+
+Carbon pool (:math:`\mathrm{C}_{det}`)
+--------------------------------------
+
+The :math:`\mathrm{C}_{det}` compartment is balanced by carbon sources associated
+with sloppy feeding, aggregation of phytoplankton, mortality of
+heterotrophs and degradation of :math:`\mathrm{C}_{det}` to :math:`\mathrm{DOC}` as the only
+loss term. 
+
+.. math::
+   \label{detC}
+   \begin{split}
+   S(\mathrm{C}_{det}) = &\; \left( \frac{1}{q_{phy}} \cdot G_{phy}  + \frac{1}{q_{dia}} \cdot G_{dia} \right) \cdot (1-\gamma) + g \cdot (\mathrm{C}_{phy} + \mathrm{C}_{dia} ) \\ 
+   &\;+ \frac{1}{q_{het} } \cdot m_{het}  \cdot \mathrm{N}_{het}^2 -\rho_{POC} \cdot f_T \cdot \mathrm{C}_{det}
+   \end{split}
+
+The grazing and the quadratic mortality flux (see section
+\ref{sec:het}), which are calculated in terms of N biomass, are
+converted to carbon biomass via the respective intracellular N:C
+ratios (:math:`q_{phy}`, :math:`q_{dia}` and :math:`q_{het}`). The
+sloppy feeding part of the grazing flux is transfered to the :math:`\mathrm{C}_{det}`
+compartment, while the main grazing flux is built into heterotrophic
+biomass, as determined by the grazing efficiency :math:`\gamma`. The
+degradation term consists of a constant degradation rate
+:math:`\rho_{POC}` and takes into account a temperature dependency :math:`f_T`
+(see Eq. \ref{eq:arr}). 
+
+Silica pool (:math:`\mathrm{Si}_{det}`)
+---------------------------------------
+
+The detrital silica budget consists of aggregation, grazing and
+excretion fluxes from diatoms to detritus and silica dissolution,
+which shifts silicon from :math:`\mathrm{Si}_{det}` to dissolved silicate. 
+
+   \label{detSi}
+   \begin{split}
+   S(\mathrm{Si}_{det}) = &\; (g + \epsilon^N_{dia} \cdot f^{lim}_{dia}) \cdot
+   \mathrm{Si}_{dia} + G_{dia} \cdot q^{Si:N}_{dia} - \rho_{Si}^T\cdot \mathrm{Si}_{det} 
+   \end{split}
+
+See section \ref{sec:phy} for definitions of the aggregation (:math:`g`) and
+excretion (:math:`\epsilon`) fluxes and section \ref{sec:het} for the
+grazing fluxes (:math:`G`).  
+
+The silica dissolution rate :math:`\rho_{Si}^T` follows the temperature dependence of \citet{Kamatani1982}, until it exceeds the maximum dissolution rate 
+:math:`\rho_{Si}`
+
+.. math::
+   \label{eq:sidiss}
+   \rho_{Si}^T = min(1.32 \cdot 10^{16} \cdot \exp(\frac{-11200}{T}) , \rho_{Si})
+
+\paragraph{Calcium carbonate pool (:math:`\mathrm{CaCO}_{3\,det}`)}
+Nanophytoplankton loses :math:`CaCO_3` to the detrital :math:`CaCO_3` compartment
+via excretion, respiration, aggregation and grazing. Dissolution of
+:math:`CaCO$_3` leads to an increase in :math:`\mathrm{DIC}` and alkalinity (see section
+\ref{sec:carbchem}). 
+
+.. math::
+   \label{detCaCO3}
+   \begin{split}
+   S(\mathrm{CaCO}_{3\,det}) = &\;  (\epsilon^C_{phy}  \cdot f^{lim}_{phy} +
+   r_{phy} + g + G_{phy} \cdot q^{CaCO_3:N}_{phy}) \cdot \mathrm{CaCO}_{3\,phy} \\ 
+   & \; - \lambda \cdot \mathrm{CaCO}_{3\,det}
+   \end{split}
+
+The nanophytoplankton excretion term (:math:`\epsilon^C_{phy}`) is regulated by intracellular quota as defined in
+Eq. \ref{eq:f^{lim}_{phy}}. Refer to section \ref{sec:phy} for a
+definition of the respiration (:math:`r_{phy}`) and the aggregation
+(:math:`g`) rates. The grazing flux is calculated in terms of nitrogen biomass (Eq. \ref{eq:Gphy})
+and is converted to :math:`\mathrm{CaCO}_{3\;det}` by multiplication with the
+intracellular :math:`CaCO_3`:N ratio (:math:`q^{CaCO_3:N}_{phy}`).  
+
+Detrital calcite decreases exponentially with water depth with a
+vertical length scale of 3500~m according to
+\citet{YamanakaTajika1996}. The dissolution rate :math:`\lambda` [:math:`d^{-1}`]
+depends on the sinking speed of detritus, so that 
+
+.. math::
+   \label{eq:calcdiss}
+   \lambda = \frac{w_{det}}{3500\;m} 
+
+where :math:`w_{det}` increases with depth according to
+
+.. math::
+   \label{eq:wdet}
+   w_{det} = 20 \; m\;s^{-1}+ 0.0288 \; s^{-1}\cdot \; depth (m) 
 
 
 
+Dissolved Organic Matter (DOM)
+==============================
+.. _sec_dom:
+
+Dissolved Organic Nitrogen (:math:`\mathrm{DON}`)
+-------------------------------------------------
+
+:math:`\mathrm{DON}` is produced via N excretion by nanophytoplankton, diatoms and
+heterotrophs, and by degradation of detrital N. It is turned into :math:`\mathrm{DIN}` by
+remineralization.
+
+.. math::
+   \label{DON}
+   \begin{split}
+   S(\mathrm{DON}) = &\; \epsilon^N_{phy} \cdot f^{lim}_{phy} \cdot \mathrm{N}_{phy} +
+   \epsilon^N_{dia} \cdot f^{lim}_{dia} \cdot \mathrm{N}_{dia} + \epsilon^N_{het}
+   \cdot \mathrm{N}_{het} \\ 
+   &\;+ \rho_{PON} \cdot f_T \cdot \mathrm{N}_{det} - \rho_{\mathrm{DON}} \cdot f_T \cdot \mathrm{DON}
+   \end{split}
 
 
+The constant excretion rates of phytoplankton (:math:`\epsilon^N_{phy}` and
+:math:`\epsilon^N_{dia}`) are reduced if the N:C ratio is larger than a
+threshold (see Eq. \ref{eq:f^{lim}_{phy}} and
+Eq. \ref{eq:f^{lim}_{dia}}). Heterotrophic nitrogen excretion (:math:`\epsilon^N_{het}
+\cdot \mathrm{N}_{het}`) depends only on the heterotrophic biomass. Degradation
+of :math:`\mathrm{N}_{det}` to :math:`\mathrm{DON}` and remineralization from :math:`\mathrm{DON}` to :math:`\mathrm{DIN}` is temperature
+dependent, so that the constant degradation (:math:`\rho_{PON}`) and remineralization
+(:math:`\rho_{\mathrm{DON}}`) rates are multiplied with the Arrhenius
+function (:math:`f_T`, see Eq. \ref{eq:arr}).  
+
+Dissolved Organic Carbon (:math:`\mathrm{DOC}`)
+-----------------------------------------------
+
+$\mathrm{DOC}$ sources are carbon excretion by nanophytoplankton, diatoms and
+heterotrophs, and degradation of :math:`\mathrm{C}_{det}`. Remineralization of :math:`\mathrm{DOC}` leads
+to a transfer of carbon from :math:`\mathrm{DOC}` to :math:`\mathrm{DIC}`.
+
+.. math::
+   \label{DOC}
+   \begin{split}
+   S(\mathrm{DOC}) = &\; \epsilon^C_{phy} \cdot f^{lim}_{phy} \cdot \mathrm{C}_{phy} +
+   \epsilon^C_{dia} \cdot f^{lim}_{dia} \cdot \mathrm{C}_{dia} + \epsilon^C_{het}
+   \cdot \mathrm{C}_{het}\\ 
+   &\;+ \rho_{POC} \cdot f_T \cdot \mathrm{C}_{det}  - \rho_{\mathrm{DOC}} \cdot f_T \cdot \mathrm{DOC}
+   \end{split}
+
+Metabolic excretion of organic matter by phytoplankton is determined
+by a constant excretion rate and cell quota (:math:`\epsilon^C_{phy}` and
+:math:`\epsilon^C_{dia}`, see section \ref{sec:phy}). The heterotrophic
+excretion rate per heterotrophic biomass is constant (:math:`\epsilon^C_{het}`). The constant
+degradation (:math:`\rho_{POC}`) and remineralization (:math:`\rho_{\mathrm{DOC}}`) rates that determine
+the fluxes from :math:`\mathrm{C}_{det}` to :math:`\mathrm{DOC}` and from :math:`\mathrm{DOC}` to :math:`\mathrm{DIC}` are altered
+following the Arrhenius function (:math:`f_T`, Eq. \ref{eq:arr}).  
+
+
+Boundary conditions and early diagenesis
+========================================
+.. _sec_BC:
+
+In its present version, REcoM-2 considers neither riverine input of
+nutrients, carbon and alkalinity, nor permanent burial of organic
+matter, calcium carbonate and silica in the sediment. At the sea
+surface, we assume no normal flux of tracers, except for :math:`\mathrm{DIC}` that
+can exchange with the atmospheric reservoir of :math:`CO_2`. This surface
+boundary condition can be written as
+
+.. math::
+   \label{SBC-gen}
+   \left .\kappa \frac{\partial A}{\partial z}\right|_{z=\eta} = \left\{ 
+   \begin{array}{lll} 
+   0 & \mathrm{for} & A \ne \mathrm{DIC} \\
+   F_{\mathrm{C}} & \mathrm{for} & A = \mathrm{DIC} 
+   \end{array}
+   \right.
+
+where :math:`\eta` is the sea surface elevation, and the air-sea flux of
+carbon :math:`F_{\mathrm{C}}` (positive for flux out of the ocean) is
+calculated from :math:`\mathrm{DIC}`, :math:`\mathrm{TA}`, atmospheric :math:`pCO_2`,
+temperature, salinity and wind speed, follwing OCMIP
+protocols. Likewise, we assume no horizontal flux of tracers at
+lateral boundaries.
+
+At the bottom of the ocean, the sinking flux of particulates
+(nanophytoplankton, diatoms and detritus) is directed into a
+homogeneous sediment layer, where POC and PON are degraded and instantaneously remineralized and calcium
+carbonate and silica are dissolved with fixed rates. The corresponding
+equations are 
+
+.. math::
+   \begin{split}
+   \frac{\partial \mathrm{POC}_{sed}}{\partial t} = &\; w_{det} \cdot \mathrm{C}_{det}
+   - d^C \cdot \mathrm{POC}_{sed} \\ 
+   \frac{\partial \mathrm{PON}_{sed}}{\partial t} = &\; w_{det} \cdot \mathrm{N}_{det}
+   - d^N \cdot \mathrm{PON}_{sed} \\ 
+   \frac{\partial \mathrm{Si}_{sed}}{\partial t} = 
+   &\; w_{det}\cdot  \mathrm{Si}_{det} - d^{Si}
+   \cdot \mathrm{Si}_{sed} \\ 
+   \frac{\partial \mathrm{CaCO}_{3\,sed}}{\partial t} = 
+   &\; w_{det} \cdot
+   \mathrm{CaCO}_{3\,det} - d^{CaCO_3} \cdot \mathrm{CaCO}_{3\,sed}
+   \end{split}
+
+where :math:`\mathrm{POC}_{sed}`, :math:`\mathrm{POC}_{sed}`, :math:`\mathrm{Si}_{sed}`,
+and :math:`\mathrm{CaCO}_{3\,sed}` are vertically integrated 
+concentrations in the sediment layer, i.e.\ they have the unit mol :math:`m^{-2}`. :math:`d^{C}`, :math:`d^{N}`, :math:`d^{Si}`, and :math:`d^{CaCO_3}` 
+are the degradation or dissolution rates for POC, PON, Si and :math:`CaCO_3`, respectively.
+
+The nutrients and alkalinity released during the degradation/remineralization and
+dissolution are directly returned into the water as a
+flux, i.e.\ the boundary condition at the ocean bottom is
+
+.. math::
+   \label{SBC-gen-a}
+   \left .\kappa \frac{\partial A}{\partial z}\right|_{z=-H} = \left\{ 
+   \begin{array}{lll} 
+   d^C \cdot \mathrm{POC}_{sed} + d^{CaCO_3} \cdot \mathrm{CaCO}_{3\,sed} & \mathrm{for} & A = \mathrm{DIC} \\ 
+   d^N \cdot \mathrm{PON}_{sed} & \mathrm{for} & A = \mathrm{DIN} \\ 
+   (1+1/16) \cdot d^N \cdot \mathrm{PON}_{sed} + 2d^{CaCO_3} \cdot \mathrm{CaCO}_{3\,sed} & \mathrm{for} & A = \mathrm{TA} \\ 
+   d^{Si} \cdot \mathrm{Si}_{sed} & \mathrm{for} & A = \mathrm{DSi} \\ 
+   q^{Fe} \cdot d^C \cdot \mathrm{POC}_{sed} & \mathrm{for} & A = \mathrm{DFe} \\ 
+   0 & \mathrm{for} & \mbox{all other tracers}
+   \end{array}
+   \right.
