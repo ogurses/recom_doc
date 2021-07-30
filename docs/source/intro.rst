@@ -8,13 +8,15 @@ The Regulated Ecosystem Model, version 2, (REcoM-2) describes the
 biogeochemistry in the ocean with a relatively simple ecological model
 including two phytoplankton functional types (diatoms and non-diatoms), one
 zooplankton and one detritus compartment, and inorganic and organic
-forms of the main nutrients (Figure \ref{images/Figure1.eps}). Some emphasis is put on phytoplankton
+forms of the main nutrients (Figure :numref:`fig_scheme`). Some emphasis is put on phytoplankton
 physiology, which is described in a way that allows for changes in
 cellular stoichiometry (N:C:Chl:Si for diatoms and N:C:Chl for
 non-diatoms, respectively). All in all, the model solves mass balance
 equations for 21 tracers, which are described by equations of the type
 
 .. math::
+   :label: eq_pde
+   
    \frac{\partial{A}}{\partial{t}} =-(\mathbf{U} + \mathbf{w})\cdot \mathbf{\nabla} A + 
    \mathbf{\nabla} \cdot \left( \kappa \mathbf{\nabla} A \right) + S(A)
 
@@ -26,8 +28,9 @@ a constant value for phytoplankton and diatoms.
 
 :math:`\mathbf{S(A)}` are the biogeochemical sources or sinks of the
 tracer :math:`\mathbf{A}` and are described in detail, for any of the tracers, in the
-following.  
+following (see table :numref:`tab_tracers_code` in the appendix section :ref:`sec_appendix` to identify the tracers in the code).
 
+.. _fig_scheme:
 .. figure:: images/Figure1.png
    :scale: 40 %
    :alt: Schematic sketch of the ecosystem model REcoM-2.
@@ -35,10 +38,10 @@ following.
  
    *Schematic sketch of the ecosystem model REcoM-2. The 21 tracers can be grouped (indicated by boxes) into dissolved nutrients and carbonate system parameters (upper left), phytoplankton (center), zooplankton (upper right), detritus (lower right), and dissolved organic material (lower left). Source and sink terms are depicted by arrows, short arrows denote exchange with atmosphere and sediments. Not shown: sediments also release alkalinity, inorganic nutrients and dissolved organic matter.*
 
+.. _sec_carbchem:
       
 Carbonate chemistry
 ===================
-.. _sec_carbchem:
 
 Dissolved inorganic carbon (:math:`\mathrm{DIC}`)
 -------------------------------------------------
@@ -53,22 +56,23 @@ pressure difference of :math:`CO_2` between ocean and atmosphere. This
 exchange is treated separately as boundary condition in section
 
 .. math::
+   :label: eq_S_dic
+
    \begin{split}
    S(\mathrm{DIC}) = & \;(r_{phy} - p_{phy}) \cdot \mathrm{C}_{phy} + (r_{dia} - p_{dia})
    \cdot \mathrm{C}_{dia} \\ &\; + r_{het} \cdot \mathrm{C}_{het} + \rho_{\mathrm{DOC}} \cdot f_T
    \cdot \mathrm{DOC}\\ &\; + \lambda \cdot \mathrm{CaCO}_{3 \,det} - Z
    \end{split}
  
-See section \ref{sec:phy} for details on photosynthesis (:math:`p`) and
+See section :ref:`sec_phy` for details on photosynthesis (:math:`p`) and
 phytoplankton respiration (:math:`r`) rates. :math:`\mathrm{C}_{phy}`, :math:`\mathrm{C}_{dia}` and
 :math:`\mathrm{C}_{het}` refer to carbon biomass of nanophytoplankton, diatoms and
-heterotrophs, respectively. See section \ref{sec:het} for the
+heterotrophs, respectively. See section :ref:`sec_het` for the
 formulation of the heterotrophic respiration rate (:math:`r_{het}`) and
-section \ref{sec:dom} for the DOC remineralization term (:math:`\rho_{\mathrm{DOC}} \cdot f_T \cdot \mathrm{DOC}`). 
+section :ref:`sec_dom`} for the DOC remineralization term (:math:`\rho_{\mathrm{DOC}} \cdot f_T \cdot \mathrm{DOC}`). 
 The calcite dissolution rate (:math:`\lambda`) is defined
-in Eq. \ref{eq:calcdiss} and the calcification flux (:math:`Z`) in
-Eq. \ref{eq:calcif}.
-
+in Eq. :eq:`eq_calcdiss` and the calcification flux (:math:`Z`) in
+Eq. :eq:`eq_calcif`.
 
 Total Alkalinity (:math:`\mathrm{TA}`) 
 --------------------------------------
@@ -84,20 +88,23 @@ during calcification and increased during
 dissolution of :math:`CaCO_3`.
 
 .. math::
+   :label: eq_S_ta
+
    \begin{split}
    S(\mathrm{TA}) = & \;(1 + \frac{1}{16}) \cdot ( a^N_{phy} \cdot \mathrm{C}_{phy} +
    a^N_{dia} \cdot \mathrm{C}_{dia}- \rho_{\mathrm{DON}} \cdot f_T \cdot \mathrm{DON} )     \\ 
    &+ 2\;(\lambda \cdot \mathrm{CaCO}_{3 \,det} - Z)
    \end{split}
 
-See section \ref{sec:phy} for details on the nitrogen assimilation
-rates (:math:`a^N_{phy}` and :math:`a^N_{dia}`), and section \ref{sec:dom} for the
+See section :ref:`sec_phy` for details on the nitrogen assimilation
+rates (:math:`a^N_{phy}` and :math:`a^N_{dia}`), and section :ref:`sec_dom` for the
 :math:`\mathrm{DON}` remineralization term (:math:`\rho_{\mathrm{DON}} \cdot f_T \cdot \mathrm{DON}`).
-The calcification flux (:math:`Z`) is defined in Eq. \ref{eq:calcif} and the dissolution rate of :math:`CaCO_3` (:math:`\lambda`) in Eq. \ref{eq:calcdiss}.
+The calcification flux (:math:`Z`) is defined in Eq. :eq:`eq_calcif` and the dissolution rate of :math:`CaCO_3` (:math:`\lambda`) in Eq. :eq:`eq_calcdiss`.
+
+.. _sec_nuts:
 
 Nutrients
 =========
-.. _sec_nuts:
 
 Dissolved Inorganic Nitrogen (:math:`\mathrm{DIN}`)
 ---------------------------------------------------
@@ -109,16 +116,16 @@ their cells. Remineralization of :math:`\mathrm{DON}` is a source for :math:`\ma
 
 
 .. math::
+   :label: eq_S_din
+
    \begin{split}
    S(\mathrm{DIN}) = &\; - a^N_{phy} \cdot \mathrm{C}_{phy} - a^N_{dia} \cdot \mathrm{C}_{dia} +
    \rho_{\mathrm{DON}} \cdot f_T \cdot \mathrm{DON}  
    \end{split}
 
-
-See section \ref{sec:phy} for details on the nitrogen assimilation
-rates (:math:`a^N_{phy}` and :math:`a^N_{dia}`) and section \ref{sec:dom} for an
+See section :ref:`sec_phy` for details on the nitrogen assimilation
+rates (:math:`a^N_{phy}` and :math:`a^N_{dia}`) and section :ref:`sec_dom` for an
 explanation of the temperature dependent :math:`\mathrm{DON}` remineralization. 
-
 
 Dissolved Silicate (:math:`\mathrm{DSi}`)
 -----------------------------------------
@@ -129,14 +136,16 @@ the biogenic silica in diatoms :math:`\mathrm{Si}_{dia}` and detritus
 assimilation and returned via degradation of detritus silica.
 
 .. math::
+   :label: eq_S_dsi
+
    \begin{split}
    S(\mathrm{DSi}) = &\; - a^{Si}_{dia} \cdot \mathrm{C}_{dia} + \rho^T_{Si} \cdot \mathrm{Si}_{det}
    \end{split}
 
-See section \ref{sec:phy} for the definition of the silicate
+See section :ref:`sec_phy` for the definition of the silicate
 assimilation rate (:math:`a^{Si}_{dia}`). The temperature-dependent
 dissolution rate of silica :math:`\rho^T_{Si}` is defined in
-Eq.\ \ref{eq:sidiss}.
+Eq. :eq:`eq_sidiss`.
 
 
 Dissolved Iron (:math:`\mathrm{DFe}`)
@@ -164,6 +173,8 @@ Degraded iron is directly remineralized to dissolved iron. For all
 these processes, we assume a constant iron:carbon ratio (:math:`q^{Fe}`).
 
 .. math::
+   :label: eq_S_dfe
+
    \begin{split}
    S(\mathrm{DFe}) = &\; q^{Fe} \cdot ( (r_{phy} -
    p_{phy} ) \cdot \mathrm{C}_{phy} + (r_{dia} - p_{dia} ) \cdot \mathrm{C}_{dia} + (r_{het}
@@ -172,12 +183,13 @@ these processes, we assume a constant iron:carbon ratio (:math:`q^{Fe}`).
    \mathrm{C}_{det} \cdot \mathrm{Fe}'
    \end{split}
 
-See section \ref{sec:phy} for an explanation of phytoplankton photosynthesis (:math:`p`) and respiration (:math:`r`) rates and section \ref{sec:het} for the heterotrophic
-respiration (:math:`r_{het}`) and carbon excretion rate (:math:`\epsilon^C_{het}`). The DOC remineralization term is described in section \ref{sec:dom}. 
+See section :ref:`sec_phy` for an explanation of phytoplankton photosynthesis (:math:`p`) and respiration (:math:`r`) rates and section :ref:`sec_het` for the heterotrophic
+respiration (:math:`r_{het}`) and carbon excretion rate (:math:`\epsilon^C_{het}`). The DOC remineralization term is described in section :ref:`sec_dom`. 
+
+.. _sec_phy:
 
 Phytoplankton
 =============
-.. _sec_phy:
 
 The equations for the two classes of phytoplankton are based on a
 slightly modified version of the physiological model by
@@ -191,6 +203,8 @@ All physiological rates, such as the photosynthesis and assimilation rates
 depend on cell quota in the formulation of \citet{Geider1998}. These are defined as the intracellular ratios of N:C, Chl:C and Si:C:
 
 .. math::
+   :label: eq_q_general
+
    \begin{split}
    q = \frac{\mathrm{N}}{\mathrm{C}};\;\;\; q^{Si} &= \frac{\mathrm{Si}}{\mathrm{C}};\;\;\; q^{Chl} = \frac{\mathrm{Chl}}{\mathrm{C}};\;\;\;
    \end{split}
@@ -198,6 +212,8 @@ depend on cell quota in the formulation of \citet{Geider1998}. These are defined
 In addition quota are used to convert biomass in terms of carbon or nitrogen to Fe, Si, Chl or :math:`CaCO_3`:
 
 .. math::
+   :label: eq_q_species
+
    q^{Fe} = \frac{\mathrm{Fe}}{\mathrm{C}} \;\;\;
    q^{Si:N} = \frac{\mathrm{Si}}{\mathrm{N}};\;\;\; q^{Chl:N} = \frac{\mathrm{Chl}}{\mathrm{N}};\;\;\;q^{CaCO_3:N} = \frac{\mathrm{CaCO_3}}{\mathrm{N}}; 
 
@@ -207,42 +223,50 @@ Nitrogen pool (:math:`\mathrm{N}_{phy}` and :math:`\mathrm{N}_{dia}`)
 The nitrogen pool in nanophytoplankton and diatoms is built up by the
 assimilation of nitrogen, which is assumed proportional to carbon biomass.
 Metabolic processes lead to excretion of biogenic nitrogen to the
-:math:`\mathrm{DON}` pool.  At high intracellular N:C ratios (:math:`q`), we assume that this
-excretion is downregulated.  Aggregation and grazing by zooplankton
+:math:`\mathrm{DON}` pool. At high intracellular N:C ratios (:math:`q`), we assume that this
+excretion is downregulated. Aggregation and grazing by zooplankton
 transfer nitrogen to the detritus and zooplankton pools:
 
 .. math::
+   :label: eq_S_Nphy
+
    \begin{split}
    S(\mathrm{N}_{phy}) = &\;a^N_{phy} \cdot \mathrm{C}_{phy} - (\epsilon^N_{phy} \cdot
    f^{lim}_{phy} + g) \cdot \mathrm{N}_{phy}  - G_{phy} 
    \end{split}
 
 .. math::
+   :label: eq_S_Ndia
+
    \begin{split}
    S(\mathrm{N}_{dia}) = &\;a^N_{dia} \cdot \mathrm{C}_{dia} -
    (\epsilon^N_{dia} \cdot f^{lim}_{dia} + g) \cdot \mathrm{N}_{dia} - G_{dia} 
    \end{split}
 
-See section \ref{sec:het} for a description of the grazing formulation
+See section :ref:`sec_het` for a description of the grazing formulation
 (:math:`G_{phy}` and :math:`G_{dia}`).
 The carbon-specific nitrogen uptake rate depends on the maximum
 photosynthetic rate (:math:`p_{phy}^{max}` and :math:`p_{dia}^{max}`,
-Eq. \ref{eq:p^{max}_{phy}}, Eq. \ref{eq:p^{max}_{dia}}), which is
+eq. :eq:`eq_pmaxphy`, eq. :eq:`eq_pmaxdia`), which is
 converted to nitrogen units by multiplication with an optimal N:C
 uptake ratio (:math:`\sigma^N_{phy}` and :math:`\sigma^N_{dia}`). Nitrogen uptake
 rates are further affected by the intracellular nitrogen status :math:`q`
 through :math:`f^{lim}_{phy}` and :math:`f^{lim}_{dia}`, (see
-Eq. \ref{eq:f^{lim}_{phy}} and Eq. \ref{eq:f^{lim}_{dia}}) and by
+Eq. :eq:`eq_f_lim_phy` and Eq. :eq:`eq_f_lim_dia`) and by
 extracellular nitrogen concentrations through an assumed 
 Michaelis-Menten uptake kinetics.
 
 .. math::
+   :label: eq_a_phy_N
+
    \begin{split}
    a_{phy}^{N} = p_{phy}^{max} \cdot \sigma_{phy}^N \cdot
    f^{lim}_{phy} \cdot (\frac{\mathrm{DIN}}{\mathrm{DIN} + K_{phy}^{\mathrm{N}}}) 
    \end{split}
 
 .. math::
+   :label: eq_a_dia_N
+   
    \begin{split}
    a_{dia}^{N} = p_{dia}^{max} \cdot \sigma_{dia}^N \cdot
    f^{lim}_{dia} \cdot (\frac{\mathrm{DIN}}{\mathrm{DIN} + K_{dia}^{\mathrm{N}}}) 
@@ -278,6 +302,8 @@ With this function we can now formulate the functions limiting nitrogen
 assimilation as
 
 .. math::
+   :label: eq_f_lim_phy
+
    \begin{split}
    f^{lim}_{phy} = f(q_{phy},q_{phy\,max},\theta_{max}) 
    \end{split}
@@ -285,6 +311,8 @@ assimilation as
 and
 
 .. math::
+   :label: eq_f_lim_dia
+
    \begin{split}
    f^{lim}_{dia} = f(q_{dia},q_{dia\,max},\theta_{max}) 
    \end{split}
@@ -293,6 +321,8 @@ The aggregation rate (:math:`g`) is assumed to be proportional to the
 abundance of phytoplankton and detritus: 
 
 .. math::
+   :label: eq_g
+
    \begin{split}
    g = \phi_{phy} \cdot \mathrm{N}_{phy} + \phi_{phy} \cdot
    \mathrm{N}_{dia} + \phi_{det} \cdot \mathrm{N}_{det}
@@ -313,23 +343,25 @@ availablity of proteins as in the nitrogen pool, respiration (:math:`r`),
 aggregation (:math:`g`), and grazing (:math:`G`).
 
 .. math::
+   :label: eq_C_phy
+   
    \begin{split}
-   \label{C_{phy}}
    S(\mathrm{C}_{phy}) = &\;(p_{phy}  - \epsilon^C_{phy} \cdot f^{lim}_{phy} -
    r_{phy} - g) \cdot \mathrm{C}_{phy} - \frac{1}{q_{phy}}Ê\cdot G_{phy}
    \end{split}
 
 .. math::
+   :label: eq_C_dia
+
    \begin{split}
-   \label{C_{dia}}
    S(\mathrm{C}_{dia}) = &\;(p_{dia}  - \epsilon^C_{dia}  \cdot f^{lim}_{dia} -
    r_{dia} - g) \cdot \mathrm{C}_{dia} -  \frac{1}{q_{dia}} \cdot G_{dia} 
    \end{split}
 
 Grazing (:math:`G`) is calculated on the basis of nitrogen biomass and
-converted to carbon using the intracellular N:C ratio (:math:`q_{phy}`, :math:`q_{dia}`). See section \ref{sec:het} for the grazing
-formulation, Eq. \ref{eq:g} for the aggregation rate :math:`g` and Eq. \ref{eq:f^{lim}_{phy}} and
-Eq. \ref{eq:f^{lim}_{dia}} for the limiter functions for the carbon
+converted to carbon using the intracellular N:C ratio (:math:`q_{phy}`, :math:`q_{dia}`). See section :ref:`sec_het` for the grazing
+formulation, Eq. :eq:`eq_g` for the aggregation rate :math:`g` and Eq. :eq:`eq_f_lim_phy` and
+Eq. :eq:`eq_f_lim_dia` for the limiter functions for the carbon
 excretion rates :math:`\epsilon^C_{phy}` and :math:`\epsilon^C_{dia}`.
 
 The photosynthetic rate (:math:`p_{phy}` and :math:`p_{dia}`) is a saturating
@@ -341,15 +373,16 @@ chlorophyll (:math:`\alpha`) with the intracellular chlorophyll to carbon
 ratio (:math:`q^{Chl}`).
 
 .. math::
-   \label{eq:p_{phy}}
+   :label: eq_p_phy
+
    p_{phy} = p^{max}_{phy} \cdot \left( 1 - \exp \left( -\alpha_{phy} \cdot
     q^{Chl}_{phy} \cdot PAR / p^{max}_{phy} \right) \right) 
 
 .. math::
-   \label{eq:p_{dia}}
+   :label: eq_p_dia
+
    p_{dia} =p^{max}_{dia} \cdot \left( 1 - \exp \left( -\alpha_{dia} \cdot
     q^{Chl}_{dia} \cdot PAR / p^{max}_{dia} \right) \right) 
-
 
 The apparent maximum photosynthetic rates (:math:`p^{max}_{phy}` and
 :math:`p^{max}_{dia}`) are based on the true constant maximum photosynthetic
@@ -358,13 +391,15 @@ metabolic state of the cell, external dissolved Fe concentration and
 temperature: 
 
 .. math::
-   \label{eq:p^{max}_{phy}}
+   :label: eq_pmaxphy
+
    \begin{split}
    p^{max}_{phy} = &\;\mu^{max}_{phy} \cdot f_{T} \cdot \min( l^{Fe}_{phy}, l^{N}_{min})
    \end{split}
 
 .. math::
-   \label{eq:p^{max}_{dia}}
+   :label: eq_pmaxdia
+
    \begin{split}
    p^{max}_{dia} = &\;\mu^{max}_{dia} \cdot f_{T} \cdot \min( l^{Fe}_{dia}, l^{N}_{min}, l^{Si}_{min})
    \end{split}
@@ -375,13 +410,15 @@ with an Arrhenius function :math:`f_T` of the local temperature (:math:`T` in Ke
 relative to a reference temperature :math:`T_{ref}`: 
 
 .. math::
-   \label{eq:arr}
+   :label: eq_arr
+
    f_T = \exp \left(- 4500 \cdot \left( \frac{1}{T}- \frac{1}{T_{ref}}\right) \right)
 
 Growth-limitation by iron is represented by a Michaelis-Menten term
 
 .. math::
-   \label{eq:limFe}
+   :label: eq_limFe
+
    l^{Fe}_{phy} = \frac{\mathrm{DFe}}{\mathrm{DFe} + K^{Fe}_{phy}}, \;\;\; l^{Fe}_{dia} = \frac{\mathrm{DFe}}{\mathrm{DFe} + K^{Fe}_{dia}}
 
 while nitrogen limitation of nanophytoplankton and diatoms is modeled as a
@@ -389,7 +426,8 @@ function of the intracellular nitrogen quota :math:`q`, with growth
 ceasing completely at a minimum quota :math:`q_{min}` 
 
 .. math::
-   \label{eq:l_{minNC}}
+   :label: eq_l_minNC
+
    \begin{split}
    l^N_{min} = f(q_{min},q,\theta_{min})
    \end{split}
@@ -398,7 +436,8 @@ For diatoms, photosynthesis is also downregulated if the cellular Si:C
 ratio (:math:`q^{Si}`) approaches a minimum ratio :math:`q^{Si}_{min}`
 
 .. math::
-   \label{eq:l_{minSiC}}
+   :label: eq_l_minSiC
+
    \begin{split}
    l^{Si}_{min} = f(q_{min}^{Si},q^{Si},\theta_{min}^{Si})
    \end{split}
@@ -406,31 +445,35 @@ ratio (:math:`q^{Si}`) approaches a minimum ratio :math:`q^{Si}_{min}`
 :math:`\theta_{min}` and :math:`\theta_{min}^{Si}` are dimensionless
 constants which regulate the steepness of the quota-growth relation (see Eq. \ref{eq:lim}). 
 
+.. 
+   todo: which \ref{eq:lim}?
 
 The respiration rates (:math:`r_{phy}` and :math:`r_{dia}`) represent the
 sum of maintenance metabolic losses and the costs of biosynthesis,
 which are proportional to the rates of nutrient assimilation: 
  
 .. math::
-   \label{eq:r_{phy}}
+   :label: eq_r_phy
+
    \begin{split}
    r_{phy} = \eta_{phy} \cdot f^{lim}_{phy} + \zeta^{N} \cdot a^{N}_{phy}
    \end{split}
 
 .. math::
-   \label{eq:r_{dia}}
+   :label: eq_r_dia
+
    \begin{split}
    r_{dia} = \eta_{dia} \cdot f^{lim}_{dia} + \zeta^{N} \cdot
    a^{N}_{dia} + \zeta^{Si} \cdot a^{Si}_{dia} 
    \end{split}
 
-See Eq. \ref{eq:f^{lim}_{phy}} and Eq. \ref{eq:f^{lim}_{dia}} for the
+See Eq. :eq:`eq_f_lim_phy` and Eq. :eq:`eq_f_lim_dia` for the
 limiting functions :math:`f^{lim}` of the constant maintenance respiration
 rates :math:`\eta_{phy}` and :math:`\eta_{dia}`. :math:`\zeta` denotes the cost for
 nutrient uptake and synthesis of cellular machinery in mol carbon per
 mol of nitrogen and silicon, respectively. See
-Eq. \ref{eq:a_{phy}^{N}}, Eq. \ref{eq:a_{dia}^{N}} and
-Eq. \ref{eq:a^{Si}_{dia}} for details of the nutrient assimilation
+Eq. :eq:`eq_a_phy_N`, Eq. :eq:`eq_a_dia_N` and
+Eq. :eq:`eq_a_Si_dia` for details of the nutrient assimilation
 rates.
 
 Chlorophyll (:math:`\mathrm{Chl}_{phy}` and :math:`\mathrm{Chl}_{dia}`)
@@ -440,20 +483,22 @@ Chlorophyll synthesis is modeled as a function of irradiance and of nitrogen
 assimilation. Chlorophyll is degraded with a fixed rate (:math:`d^{Chl}`), and lost via aggregation (:math:`g`) and grazing (:math:`G`). 
 
 .. math::
-   \label{Chl_{phy}}
+   :label: eq_Chl_phy
+
    \begin{split}
    S(\mathrm{Chl}_{phy}) = &\;s_{phy}  \cdot \mathrm{C}_{phy}
    - (d^{Chl}_{phy} + g) \cdot \mathrm{Chl}_{phy} - G_{phy} \cdot q^{Chl:N}_{phy} 
    \end{split}
 
 .. math::
-   \label{Chl_{dia}}
+   :label: eq_Chl_dia
+
    \begin{split}
    S(\mathrm{Chl}_{dia}) = &\;s_{dia}  \cdot \mathrm{C}_{dia}
    - (d^{Chl}_{dia} + g) \cdot \mathrm{Chl}_{dia} - G_{dia} \cdot q^{Chl:N}_{dia} 
    \end{split}
 
-See Eq. \ref{eq:g} for the aggregation rate
+See Eq. :eq:`eq_g` for the aggregation rate
 (:math:`g`). The grazing flux :math:`G` in terms of nitrogen biomass is converted
 to chlorophyll using the intracellular Chl:N ratio (:math:`q^{Chl:N}`).
 
@@ -463,7 +508,8 @@ synthesis of chlorophyll, for light harvesting and in the
 photosynthetic apparatus: 
 
 .. math::
-   \label{s_{phy}}
+   :label: eq_s_phy
+
    \begin{split}
    s_{phy} = a _{phy}^{N} \cdot q_{phy\;max}^{Chl:N} \cdot 
    \min\left( 1, \frac{p_{phy}}{\alpha_{phy} \cdot q^{Chl}_{phy} \cdot
@@ -471,7 +517,8 @@ photosynthetic apparatus:
    \end{split}
 
 .. math::
-   \label{s_{dia}}
+   :label: eq_s_dia
+   
    \begin{split}
    s_{dia}= a _{dia}^{N} \cdot q_{dia\,max}^{Chl:N} \cdot 
    \min\left( 1, \frac{p_{dia}}{\alpha_{dia} \cdot q^{Chl}_{dia} \cdot
@@ -479,7 +526,7 @@ photosynthetic apparatus:
    \end{split}
 
 The carbon-specific nitrogen assimilation rates (:math:`a_{phy}^{N}` and
-:math:`a_{dia}^{N}`, see Eq. \ref{eq:a_{phy}^{N}} and \ref{eq:a_{dia}^{N}})
+:math:`a_{dia}^{N}`, see Eq. :eq:`eq_a_phy_N` and :eq:`eq_a_dia_N`)
 are converted to chlorophyll units by multiplication with a constant
 maximum Chl:N ratio (:math:`q_{phy\;max}^{Chl:N}`) and
 (:math:`q_{dia\,max}^{Chl:N}`). The regulation term 
@@ -487,8 +534,7 @@ maximum Chl:N ratio (:math:`q_{phy\;max}^{Chl:N}`) and
 reflects the ratio of enery assimilated to energy absorbed; it
 increases under low irradiance and declines as photosynthesis becomes
 light saturated and/or nutrient limited. 
-See Eq. \ref{eq:p_{phy}}
-and Eq. \ref{eq:p_{dia}} for the descriptions of photosynthesis rate 
+See Eq. :eq:`eq_p_phy` and Eq. :eq:`eq_p_dia` for the descriptions of photosynthesis rate 
 :math:`p_{phy}` and :math:`p_{dia}`.  
 
 Diatom silica pool (:math:`\mathrm{Si}_{dia}`) 
@@ -500,16 +546,17 @@ the other hand, leads to a corresponding transfer of silica to the
 detritus silica pool.
  
 .. math::
-   \label{Si_{dia}}
+   :label: eq_Si_dia
+
    \begin{split}
    S(\mathrm{Si}_{dia}) = &\; a^{Si}_{dia} \cdot \mathrm{C}_{dia} - (\epsilon^{N}_{dia}
    \cdot f^{lim}_{dia} + g) \cdot \mathrm{Si}_{dia} - G_{dia} \cdot q^{Si:N}_{dia} 
    \end{split}
 
 The intracellular Si:N ratio :math:`q^{Si:N}_{dia}` is used to convert the
-grazing flux :math:`G_{dia}` (Eq. \ref{eq:Gdia}) to the corresponding loss in biogenic silica. See
-Eq. \ref{eq:g} for the aggregation rate (:math:`g`) and
-Eq. \ref{eq:f^{lim}_{dia}} for the function (:math:`f^{lim}_{dia}`) limiting
+grazing flux :math:`G_{dia}` (Eq. :eq:`eq_Gdia`) to the corresponding loss in biogenic silica. See
+Eq. :eq:`eq_g` for the aggregation rate (:math:`g`) and
+Eq. :eq:`eq_f_lim_dia`} for the function (:math:`f^{lim}_{dia}`) limiting
 the excretion rate (:math:`\epsilon^N_{dia}`).
 
 Silicate assimilation is treated as a relatively independent metabolic
@@ -525,7 +572,8 @@ approach the maximum Si:C ratio
 constant which is used to regulate the slope.  
 
 .. math::
-   \label{eq:a^{Si}_{dia}}
+   :label: eq_a_Si_dia
+
    \begin{split}
    a^{Si}_{dia} = \mu^{max}_{dia} \cdot  \sigma_{dia}^{Si} \cdot f_{T}
    \cdot f^{lim}_{dia} \cdot f^{Si}_{dia} \cdot (\frac{\mathrm{DSi}}{\mathrm{DSi} +
@@ -533,7 +581,8 @@ constant which is used to regulate the slope.
    \end{split}
 
 .. math::
-   \label{eq:f^{Si}_{dia}}
+   :label: eq_f_Si_dia
+
    \begin{split}
    f^{Si}_{dia} = f(q^{Si},q_{max}^{Si},\theta_{max}^{Si})
    \end{split}
@@ -541,8 +590,8 @@ constant which is used to regulate the slope.
 Iron limitation shows an indirect influence on silicate assimilation
 via variable intracellular Si:N:C ratios by affecting the assimilation
 of nitrogen and carbon. 
-See Eq. \ref{eq:f^{lim}_{dia}} for the description of the limiting
-function :math:`f^{lim}_{dia}` and Eq. \ref{eq:arr} for the definition of
+See Eq. :eq:`eq_f_lim_dia` for the description of the limiting
+function :math:`f^{lim}_{dia}` and Eq. :eq:`eq_arr` for the definition of
 the temperature dependence :math:`f_{T}`. 
 
 Calcite pool (:math:`\mathrm{CaCO}_{3 \, phy}`)
@@ -557,7 +606,8 @@ along with organic matter excretion, respiration, aggregation and
 grazing.
 
 .. math::
-   \label{CaCO3}
+   :label: eq_CaCO3
+
    \begin{split}
    S(\mathrm{CaCO}_{3\,phy}) = &\; Z - (\epsilon^C_{phy}  \cdot f^{lim}_{phy} +
    r_{phy} + g ) \cdot \mathrm{CaCO}_{3\,phy} - G_{phy} \cdot
@@ -568,23 +618,25 @@ Calcification (:math:`Z`) is proportional to gross carbon fixation by
 nanophytoplankton:
  
 .. math::
-   \label{eq:calcif}
+   :label: eq_calcif
+   
    Z = \psi \cdot p_{phy} \cdot \mathrm{C}_{phy} 
 
 $\psi$ is the calcite production ratio that incorporates the ratio of
 calcium carbonate producers to total nanophytoplankton and the :math:`CaCO_3`:POC
 ratio in coccolithophorids. The latter is assumed to be 1.  
 
-See Eq. \ref{eq:f^{lim}_{phy}} for the function :math:`f^{lim}_{phy}`
+See Eq. :eq:`eq_f_lim_phy` for the function :math:`f^{lim}_{phy}`
 limiting the excretion rate :math:`\epsilon^C_{phy}`. Nanophytoplankton photosynthesis (:math:`p_{phy}`)
 respiration (:math:`r_{phy}`) and aggregation (:math:`g`) rates are defined
-in Eq. \ref{eq:p_{phy}}, Eq. \ref{eq:r_{phy}} and Eq. \ref{eq:g}, respectively. The grazing flux :math:`G_{phy}` (Eq. \ref{eq:Gphy}) is
+in Eq. :eq:`eq_p_phy`, Eq. :eq:`eq_r_phy` and Eq. :eq:`eq_g`, respectively. The grazing flux :math:`G_{phy}` (Eq. :eq:`eq_Gphy`) is
 calculated in units of nitrogen biomass and converted to :math:`CaCO_3`
 using the intracellular :math:`CaCO_3`:N ratio (:math:`q^{CaCO_3:N}_{phy}`). 
 
+.. _sec_het:
+
 Heterotrophs
 ============
-.. _sec_het:
 
 Nitrogen pool (:math:`\mathrm{N}_{het}`)
 ----------------------------------------
@@ -592,7 +644,8 @@ Heterotrophic zooplankton increase their nitrogen pool via grazing,
 and loose nitrogen through excretion of :math:`\mathrm{DON}` and a quadratic mortality term:
 
 .. math::
-   \label{hetN}
+   :label: eq_hetN
+
    \begin{split}
    S(\mathrm{N}_{het}) = &\; G \cdot \gamma - m_{het} \cdot \mathrm{N}_{het}^2 -
    \epsilon^N_{het} \cdot \mathrm{N}_{het} 
@@ -609,7 +662,8 @@ the remainder of the grazed phytoplankton directly to detritus.
 The grazing on nanophytoplankton and diatoms is defined as:
 
 .. math::
-   \label{eq:G}
+   :label: eq_Gall
+
    \begin{split}
    G = \xi \cdot \frac{(\mathrm{N}_{phy} + \mathrm{N}_{dia}^{'})^2}{\varphi_{1} + (\mathrm{N}_{phy}
    + \mathrm{N}_{dia}^{'})^2} \cdot f_{T} \cdot \mathrm{N}_{het} 
@@ -624,7 +678,8 @@ relationship as for phytoplankton growth (:math:`f_{T}`).
 relative to that on nanophytoplankton:
 
 .. math::
-   \label{eq:Ndia}
+   :label: eq_Ndia
+
    \begin{split}
    \mathrm{N}_{dia}^{'} = \tau \cdot \frac{ \mathrm{N}_{dia}^2}{\varphi_{2} +  \mathrm{N}_{dia}^2} \cdot \mathrm{N}_{dia}
    \end{split}
@@ -643,13 +698,15 @@ diatoms to the total grazing flux are calculated by their respective
 proportion to the total zooplankton food resource.  
 
 .. math::
-   \label{eq:Gphy}
+   :label: eq_Gphy
+
    \begin{split}
    G_{phy} = G \cdot \frac{\mathrm{N}_{phy}}{ \mathrm{N}_{phy} + \mathrm{N}_{dia}^{'}} 
    \end{split}
 
 .. math::
-   \label{eq:Gdia}
+   :label: eq_Gdia
+
    \begin{split}
    G_{dia} = G \cdot \frac{\mathrm{N}_{dia}^{'}}{ \mathrm{N}_{phy} + \mathrm{N}_{dia}^{'}} 
    \end{split}
@@ -662,7 +719,8 @@ via grazing and carbon loss via mortality, carbon excretion and
 respiration. 
 
 .. math::
-   \label{eq:hetC}
+   :label: eq_hetC
+
    \begin{split}
    S(\mathrm{C}_{het}) = &\; \left( \frac{1}{q_{phy}} \cdot  G_{phy}  + \frac{1}{q_{dia}} \cdot G_{dia} \right) \cdot \gamma - \frac{1}{q_{het}} \cdot m_{het}  \cdot \mathrm{N}_   {het}^2
    \\ 
@@ -689,9 +747,10 @@ towards Redfield, with a time-scale :math:`\kappa_{het}`:
    0 & \mathrm{if} & q^{C:N}_{het} \le q^{C:N}_{Redfield}
    \end{array} \right.
 
+.. _sec_det:
+
 Detritus
 ========
-.. _sec_det:
 
 \paragraph{Nitrogen pool (:math:`\mathrm{N}_{det}`)}
 Losses of phytoplankton nitrogen due to aggregation, mortality and
@@ -700,17 +759,18 @@ degraded to :math:`\mathrm{DON}`, which is the only loss term for detrital
 nitrogen.
 
 .. math::
-   \label{detN}
+   :label: eq_detN
+
    \begin{split}
    S(\mathrm{N}_{det}) = &\; G \cdot (1 - \gamma) + g \cdot (\mathrm{N}_{phy} + \mathrm{N}_{dia}) +
    m_{het}  \cdot \mathrm{N}_{het}^2 - \rho_{PON} \cdot f_T \cdot \mathrm{N}_{det} 
    \end{split}
 
-See section \ref{sec:het} for a definition of the grazing flux :math:`G`,
+See section :ref:`sec_het` for a definition of the grazing flux :math:`G`,
 the grazing efficiency :math:`\gamma` and the zooplankton mortality flux (:math:`m_{het} \cdot
 \mathrm{N}_{het}^2`). The aggregation rate :math:`g` is defined
-in Eq. \ref{eq:g}. Degradation of :math:`N_{det}` to DON is based on a constant degradation rate (:math:`\rho_{PON}`)
-and a temperature dependency (:math:`f_T`, Eq. \ref{eq:arr}).
+in Eq. :eq:`eq_g`. Degradation of :math:`N_{det}` to DON is based on a constant degradation rate (:math:`\rho_{PON}`)
+and a temperature dependency (:math:`f_T`, Eq. :eq:`eq_arr`).
 
 Carbon pool (:math:`\mathrm{C}_{det}`)
 --------------------------------------
@@ -721,14 +781,15 @@ heterotrophs and degradation of :math:`\mathrm{C}_{det}` to :math:`\mathrm{DOC}`
 loss term. 
 
 .. math::
-   \label{detC}
+   :label: eq_detC
+
    \begin{split}
    S(\mathrm{C}_{det}) = &\; \left( \frac{1}{q_{phy}} \cdot G_{phy}  + \frac{1}{q_{dia}} \cdot G_{dia} \right) \cdot (1-\gamma) + g \cdot (\mathrm{C}_{phy} + \mathrm{C}_{dia} ) \\ 
    &\;+ \frac{1}{q_{het} } \cdot m_{het}  \cdot \mathrm{N}_{het}^2 -\rho_{POC} \cdot f_T \cdot \mathrm{C}_{det}
    \end{split}
 
 The grazing and the quadratic mortality flux (see section
-\ref{sec:het}), which are calculated in terms of N biomass, are
+:ref:`sec_het`), which are calculated in terms of N biomass, are
 converted to carbon biomass via the respective intracellular N:C
 ratios (:math:`q_{phy}`, :math:`q_{dia}` and :math:`q_{het}`). The
 sloppy feeding part of the grazing flux is transfered to the :math:`\mathrm{C}_{det}`
@@ -736,7 +797,7 @@ compartment, while the main grazing flux is built into heterotrophic
 biomass, as determined by the grazing efficiency :math:`\gamma`. The
 degradation term consists of a constant degradation rate
 :math:`\rho_{POC}` and takes into account a temperature dependency :math:`f_T`
-(see Eq. \ref{eq:arr}). 
+(see Eq. :eq:`eq_arr`). 
 
 Silica pool (:math:`\mathrm{Si}_{det}`)
 ---------------------------------------
@@ -745,31 +806,35 @@ The detrital silica budget consists of aggregation, grazing and
 excretion fluxes from diatoms to detritus and silica dissolution,
 which shifts silicon from :math:`\mathrm{Si}_{det}` to dissolved silicate. 
 
-   \label{detSi}
+.. math::
+   :label: eq_detSi
+
    \begin{split}
    S(\mathrm{Si}_{det}) = &\; (g + \epsilon^N_{dia} \cdot f^{lim}_{dia}) \cdot
    \mathrm{Si}_{dia} + G_{dia} \cdot q^{Si:N}_{dia} - \rho_{Si}^T\cdot \mathrm{Si}_{det} 
    \end{split}
 
-See section \ref{sec:phy} for definitions of the aggregation (:math:`g`) and
-excretion (:math:`\epsilon`) fluxes and section \ref{sec:het} for the
+See section :ref:`sec_phy` for definitions of the aggregation (:math:`g`) and
+excretion (:math:`\epsilon`) fluxes and section :ref:`sec_het` for the
 grazing fluxes (:math:`G`).  
 
 The silica dissolution rate :math:`\rho_{Si}^T` follows the temperature dependence of \citet{Kamatani1982}, until it exceeds the maximum dissolution rate 
 :math:`\rho_{Si}`
 
 .. math::
-   \label{eq:sidiss}
+   :label: eq_sidiss
+
    \rho_{Si}^T = min(1.32 \cdot 10^{16} \cdot \exp(\frac{-11200}{T}) , \rho_{Si})
 
 \paragraph{Calcium carbonate pool (:math:`\mathrm{CaCO}_{3\,det}`)}
 Nanophytoplankton loses :math:`CaCO_3` to the detrital :math:`CaCO_3` compartment
 via excretion, respiration, aggregation and grazing. Dissolution of
 :math:`CaCO$_3` leads to an increase in :math:`\mathrm{DIC}` and alkalinity (see section
-\ref{sec:carbchem}). 
+:ref:`sec_carbchem`). 
 
 .. math::
-   \label{detCaCO3}
+   :label: eq_detCaCO3
+
    \begin{split}
    S(\mathrm{CaCO}_{3\,det}) = &\;  (\epsilon^C_{phy}  \cdot f^{lim}_{phy} +
    r_{phy} + g + G_{phy} \cdot q^{CaCO_3:N}_{phy}) \cdot \mathrm{CaCO}_{3\,phy} \\ 
@@ -777,9 +842,9 @@ via excretion, respiration, aggregation and grazing. Dissolution of
    \end{split}
 
 The nanophytoplankton excretion term (:math:`\epsilon^C_{phy}`) is regulated by intracellular quota as defined in
-Eq. \ref{eq:f^{lim}_{phy}}. Refer to section \ref{sec:phy} for a
+Eq. :eq:`eq_f_lim_phy`. Refer to section :ref:`sec_phy` for a
 definition of the respiration (:math:`r_{phy}`) and the aggregation
-(:math:`g`) rates. The grazing flux is calculated in terms of nitrogen biomass (Eq. \ref{eq:Gphy})
+(:math:`g`) rates. The grazing flux is calculated in terms of nitrogen biomass (Eq. :eq:`eq_Gphy`)
 and is converted to :math:`\mathrm{CaCO}_{3\;det}` by multiplication with the
 intracellular :math:`CaCO_3`:N ratio (:math:`q^{CaCO_3:N}_{phy}`).  
 
@@ -789,20 +854,21 @@ vertical length scale of 3500~m according to
 depends on the sinking speed of detritus, so that 
 
 .. math::
-   \label{eq:calcdiss}
-   \lambda = \frac{w_{det}}{3500\;m} 
+   :label: eq_calcdiss
+
+    \lambda = \frac{w_{det}}{3500\;m} 
 
 where :math:`w_{det}` increases with depth according to
 
 .. math::
-   \label{eq:wdet}
+   :label: eq_wdet
+
    w_{det} = 20 \; m\;s^{-1}+ 0.0288 \; s^{-1}\cdot \; depth (m) 
 
-
+.. _sec_dom:
 
 Dissolved Organic Matter (DOM)
 ==============================
-.. _sec_dom:
 
 Dissolved Organic Nitrogen (:math:`\mathrm{DON}`)
 -------------------------------------------------
@@ -812,7 +878,8 @@ heterotrophs, and by degradation of detrital N. It is turned into :math:`\mathrm
 remineralization.
 
 .. math::
-   \label{DON}
+   :label: eq_DON
+
    \begin{split}
    S(\mathrm{DON}) = &\; \epsilon^N_{phy} \cdot f^{lim}_{phy} \cdot \mathrm{N}_{phy} +
    \epsilon^N_{dia} \cdot f^{lim}_{dia} \cdot \mathrm{N}_{dia} + \epsilon^N_{het}
@@ -820,16 +887,15 @@ remineralization.
    &\;+ \rho_{PON} \cdot f_T \cdot \mathrm{N}_{det} - \rho_{\mathrm{DON}} \cdot f_T \cdot \mathrm{DON}
    \end{split}
 
-
 The constant excretion rates of phytoplankton (:math:`\epsilon^N_{phy}` and
 :math:`\epsilon^N_{dia}`) are reduced if the N:C ratio is larger than a
-threshold (see Eq. \ref{eq:f^{lim}_{phy}} and
-Eq. \ref{eq:f^{lim}_{dia}}). Heterotrophic nitrogen excretion (:math:`\epsilon^N_{het}
+threshold (see Eq. :eq:`eq_f_lim_phy` and 
+Eq. :eq:`eq_f_lim_dia`). Heterotrophic nitrogen excretion (:math:`\epsilon^N_{het}
 \cdot \mathrm{N}_{het}`) depends only on the heterotrophic biomass. Degradation
 of :math:`\mathrm{N}_{det}` to :math:`\mathrm{DON}` and remineralization from :math:`\mathrm{DON}` to :math:`\mathrm{DIN}` is temperature
 dependent, so that the constant degradation (:math:`\rho_{PON}`) and remineralization
 (:math:`\rho_{\mathrm{DON}}`) rates are multiplied with the Arrhenius
-function (:math:`f_T`, see Eq. \ref{eq:arr}).  
+function (:math:`f_T`, see Eq. :eq:`eq_arr`).  
 
 Dissolved Organic Carbon (:math:`\mathrm{DOC}`)
 -----------------------------------------------
@@ -839,7 +905,8 @@ heterotrophs, and degradation of :math:`\mathrm{C}_{det}`. Remineralization of :
 to a transfer of carbon from :math:`\mathrm{DOC}` to :math:`\mathrm{DIC}`.
 
 .. math::
-   \label{DOC}
+   :label: eq_DOC
+
    \begin{split}
    S(\mathrm{DOC}) = &\; \epsilon^C_{phy} \cdot f^{lim}_{phy} \cdot \mathrm{C}_{phy} +
    \epsilon^C_{dia} \cdot f^{lim}_{dia} \cdot \mathrm{C}_{dia} + \epsilon^C_{het}
@@ -849,16 +916,16 @@ to a transfer of carbon from :math:`\mathrm{DOC}` to :math:`\mathrm{DIC}`.
 
 Metabolic excretion of organic matter by phytoplankton is determined
 by a constant excretion rate and cell quota (:math:`\epsilon^C_{phy}` and
-:math:`\epsilon^C_{dia}`, see section \ref{sec:phy}). The heterotrophic
+:math:`\epsilon^C_{dia}`, see section :ref:`sec_phy`). The heterotrophic
 excretion rate per heterotrophic biomass is constant (:math:`\epsilon^C_{het}`). The constant
 degradation (:math:`\rho_{POC}`) and remineralization (:math:`\rho_{\mathrm{DOC}}`) rates that determine
 the fluxes from :math:`\mathrm{C}_{det}` to :math:`\mathrm{DOC}` and from :math:`\mathrm{DOC}` to :math:`\mathrm{DIC}` are altered
-following the Arrhenius function (:math:`f_T`, Eq. \ref{eq:arr}).  
+following the Arrhenius function (:math:`f_T`, Eq. :eq:`eq_arr`).  
 
+.. _sec_BC:
 
 Boundary conditions and early diagenesis
 ========================================
-.. _sec_BC:
 
 In its present version, REcoM-2 considers neither riverine input of
 nutrients, carbon and alkalinity, nor permanent burial of organic
@@ -868,7 +935,8 @@ can exchange with the atmospheric reservoir of :math:`CO_2`. This surface
 boundary condition can be written as
 
 .. math::
-   \label{SBC-gen}
+   :label: eq_SBC_gen
+
    \left .\kappa \frac{\partial A}{\partial z}\right|_{z=\eta} = \left\{ 
    \begin{array}{lll} 
    0 & \mathrm{for} & A \ne \mathrm{DIC} \\
@@ -913,7 +981,8 @@ dissolution are directly returned into the water as a
 flux, i.e.\ the boundary condition at the ocean bottom is
 
 .. math::
-   \label{SBC-gen-a}
+   :label: eq_SBC_gen_a
+
    \left .\kappa \frac{\partial A}{\partial z}\right|_{z=-H} = \left\{ 
    \begin{array}{lll} 
    d^C \cdot \mathrm{POC}_{sed} + d^{CaCO_3} \cdot \mathrm{CaCO}_{3\,sed} & \mathrm{for} & A = \mathrm{DIC} \\ 
@@ -925,140 +994,3 @@ flux, i.e.\ the boundary condition at the ocean bottom is
    \end{array}
    \right.
 
-Tables
-======
-.. _sec_table:
-
-.. table:: Model coefficients and their standard values
-   :widths: 10 20 30 50
-
-   +----------------------------------+-----------+------------------+-------------------------+
-   | Symbol                           | Value     | Unit             | Parameter               |
-   +==================================+===========+==================+=========================+
-   | :math:`T_{ref}`                  | 288.15    | K                | reference temperature   |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\psi`                     | 0.02      | dimensionless    | calcite                 |
-   |                                  |           |                  | production ratio        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q^{Fe}`                   | 0.005     | :math:`\mu`      | Fe:C ratio              |
-   |                                  |           | mol\ Fe (mmol C) |                         |
-   |                                  |           | :math:`^{-1}`    |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\kappa^{scav}_{Fe}`       | 0.0156    | (mmol\ C\ m      | Fe scavenging           |
-   |                                  |           | :math:`^{-3}`)   | rate                    |
-   |                                  |           | :math:`^{-1}`d   |                         |
-   |                                  |           | :math:`^{-1}`    |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\alpha_{phy}`             | 0.14      | mmol C (mg Chl)  | initial slope of        |
-   |                                  |           | :math:`^{-1}`    | P-I curve               |
-   |                                  |           | (Wm              |                         |
-   |                                  |           | :math:`^{-2}`    |                         |
-   |                                  |           | d :math:`^{-1}`) |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\alpha_{dia}`             | 0.19      | mmol C (mg Chl)  | diatom initial          |
-   |                                  |           | :math:`^{-1}`    | slope of P-I            |
-   |                                  |           | (Wm              | curve                   |
-   |                                  |           | :math:`^{-2}`    |                         |
-   |                                  |           | d :math:`^{-1}`) |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\mu^{max}_{phy}`          | 3.0       | d\ :math:`^{-1}` | maximum                 |
-   |                                  |           |                  | photosynthesis rate     |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\mu^{max}_{dia}`          | 3.5       | d\ :math:`^{-1}` | diatom maximum          |
-   |                                  |           |                  | photosynthesis rate     |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\epsilon^N_{phy}`         | 0.05      | d\ :math:`^{-1}` | excretion rate          |
-   |                                  |           |                  | of nitrogen             |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\epsilon^N_{dia}`         | 0.05      | d\ :math:`^{-1}` | diatom excretion        |
-   |                                  |           |                  | rate of nitrogen        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\epsilon^C_{phy}`         | 0.10      | d\ :math:`^{-1}` | excretion rate of carbon|
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\epsilon^C_{dia}`         | 0.10      | d\ :math:`^{-1}` | diatom excretion        |
-   |                                  |           |                  | rate of carbon          |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\sigma_{phy}^N`           | 0.20      | mol N (mol C)    | N:C uptake ratio        |
-   |                                  |           | \ :math:`^{-1}`  |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\sigma_{dia}^N`           | 0.20      | mol N (mol C)    | diatom N:C              |
-   |                                  |           | \ :math:`^{-1}`  | uptake ratio            |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\sigma_{dia}^{Si}`        | 0.20      | mol Si (mol C)   | diatom Si:C             |
-   |                                  |           | \ :math:`^{-1}`  | uptake ratio            |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`K_{phy}^{\mathrm{N}}`     | 0.55      | mmol N           | half-saturation         |
-   |                                  |           | m\ :math:`^{-3}` | constant N uptake       |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`K_{dia}^{\mathrm{N}}`     | 1.0       | mmol N           | diatom half-saturation  |
-   |                                  |           | m\ :math:`^{-3}` | constant N uptake       |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`K^{Fe}_{phy}`             | 0.02      | :math:`\mu`\molFe| half-saturation         |
-   |                                  |           | m\ :math:`^{-3}` | constant Fe uptake      |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`K^{Fe}_{dia}`             | 0.12      | :math:`\mu`\molFe| diatom half-saturation  |
-   |                                  |           | m\ :math:`^{-3}` | constant Fe uptake      |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`K_{dia}^{\mathrm{Si}}`    | 4.0       | mmol Si          | diatom half-saturation  |
-   |                                  |           | m\ :math:`^{-3}` | constant Si uptake      |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{phy\,max}`             | 0.20      | mol N (mol C)    | maximum N:C ratio       |
-   |                                  |           | \ :math:`^{-1}`  |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{dia\,max}`             | 0.20      | mol N (mol C)    | diatom maximum          |
-   |                                  |           | \ :math:`^{-1}`  |  N:C ratio              |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{max}^{Si}`             | 0.80      | mol Si (mol C)   | diatom maximum          |
-   |                                  |           | \ :math:`^{-1}`  | Si:C ratio              |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{min}`                  | 0.04      | mol N (mol C)    | minimum N:C ratio       |
-   |                                  |           | \ :math:`^{-1}`  |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{min}^{Si}`             | 0.04      | mol Si (mol C)   | minimum Si:C ratio      |
-   |                                  |           | \ :math:`^{-1}`  |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{phy\,max}^{Chl:N}`     | 3.15      | mg Chl (mmol N)  | nanophytoplankton       |
-   |                                  |           | \ :math:`^{-1}`  | maximum Chl:N  ratio    |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`q_{dia\,max}^{Chl:N}`     | 4.2       | mg Chl (mmol N)  | diatom maximum          |
-   |                                  |           | \ :math:`^{-1}`  | Chl:N ratio             |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\theta_{max}`             | 1000      | dimensionless    | regulation slope        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\theta_{min}`             | 50        | dimensionless    | regulation slope        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\theta_{min}^{Si}`        | 1000      | dimensionless    | regulation slope        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\theta_{max}^{Si}`        | 1000      | dimensionless    | regulation slope        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\zeta^{N}`                | 2.33      | mol C (mol N)    | C cost of N             |
-   |                                  |           | \ :math:`^{-1}`  | assimilation            |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\zeta^{Si}`               | 0         | mol C (mol Si)   | C cost of Si            |
-   |                                  |           | \ :math:`^{-1}`  | assimilation            |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\phi_{phy}`               | 0.015     | (mmol N m        | phytoplankton           |
-   |                                  |           | \ :math:`^{-3}`) | specific                |
-   |                                  |           | \ :math:`^{-1}`d | aggregation rate        |
-   |                                  |           | \ :math:`^{-1}`  |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\phi_{det}`               | 0.165     | (mmol N m        | detrius specific        |
-   |                                  |           | \ :math:`^{-3}`) | aggregation rate        |
-   |                                  |           | \ :math:`^{-1}`d |                         |
-   |                                  |           | \ :math:`^{-1}`  |                         |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\eta_{phy}`               | 0.01      | d\ :math:`^{-1}` | maintenance             |
-   |                                  |           |                  | respiration rate        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\eta_{dia}`               | 0.01      | d\ :math:`^{-1}` | diatom maintenance      |
-   |                                  |           |                  | respiration rate        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`d^{Chl}_{phy}`            | 0.3       | d\ :math:`^{-1}` | chlorophyll             |
-   |                                  |           |                  | degradation rate        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`d^{Chl}_{dia}`            | 0.3       | d\ :math:`^{-1}` | diatom chlorophyll      |
-   |                                  |           |                  | degradation rate        |
-   +----------------------------------+-----------+------------------+-------------------------+
-   | :math:`\gamma`                   | 0.4       | dimensionless    | grazing                 |
-   |                                  |           |                  | efficiency              |
-   +----------------------------------+-----------+------------------+-------------------------+

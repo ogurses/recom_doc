@@ -19,7 +19,7 @@ Authors
 
    intro
    people
-
+   appendix
 
 Indices and tables
 ==================
