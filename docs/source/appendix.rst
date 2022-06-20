@@ -158,7 +158,7 @@ Appendix
    +-----------+-------------------------------------------------------------+-----------------+---------+
    | bgc05     | intracellular carbon concentration in small phytoplankton   | mmolC m-3       | iphyc   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc06     | intracellular chlorophyll-a concentration                   | mg m-3          | ipchl   |
+   | bgc06     | intracellular chlorophyll-a concentration                   | mgChl m-3       | ipchl   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
    | bgc07     | nitrogen concentration in detritus                          | mmolN m-3       | idetn   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
@@ -176,7 +176,7 @@ Appendix
    +-----------+-------------------------------------------------------------+-----------------+---------+
    | bgc14     | intracellular carbon concentration in diatoms               | mmolC m-3       | idiac   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc15     | intracellular chlorophyll concentration in diatoms          | mmolC m-3       | idchl   |
+   | bgc15     | intracellular chlorophyll concentration in diatoms          | mgChl m-3       | idchl   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
    | bgc16     | intracellular silica concentration in diatoms               | mmolSi m-3      | idiasi  |
    +-----------+-------------------------------------------------------------+-----------------+---------+
