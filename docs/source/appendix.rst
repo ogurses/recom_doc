@@ -170,31 +170,31 @@ Appendix
    +-----------+-------------------------------------------------------------+-----------------+---------+
    | bgc11     | dissolved organic nitrogen in water                         | mmolN m-3       | idon    |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc12     | EOC                                                         |                 | idoc    |
+   | bgc12     | dissolved organic carbon in water                           | mmolC m-3       | idoc    |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc13     | diatom nitrogen                                             |                 | idian   |
+   | bgc13     | intracellular nitrogen concentration in diatoms             | mmolN m-3       | idian   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc14     | diatom carbon                                               |                 | idiac   |
+   | bgc14     | intracellular carbon concentration in diatoms               | mmolC m-3       | idiac   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc15     | diatom chlorophyll                                          |                 | idchl   |
+   | bgc15     | intracellular chlorophyll concentration in diatoms          | mmolC m-3       | idchl   |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc16     | diatom silicate                                             |                 | idiasi  |
+   | bgc16     | intracellular silica concentration in diatoms               | mmolSi m-3      | idiasi  |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc17     | detritus silicate                                           |                 | idetsi  |
+   | bgc17     | silica in detritus                                          | mmolSi m-3      | idetsi  |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc18     | silicate                                                    |                 | isi     |
+   | bgc18     | silicic acid in water                                       | mmolSi m-3      | isi     |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc19     | iron                                                        |                 | ife     |
+   | bgc19     | dissolved iron in water                                     | mmolFe m-3      | ife     |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc20     | small phytoplankton calcite                                 |                 | iphycal |
+   | bgc20     | calcite associated with nanophytoplankton                   | mmolCaCO3 m-3   | iphycal |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc21     | detritus calcite                                            |                 | idetcal |
+   | bgc21     | calcite associated with detritus                            | mmolCaCO3 m-3   | idetcal |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | bgc22     | oxygen                                                      |                 | ioxy    |
+   | bgc22     | dissolved oxygen in water                                   | mmolO m-3       | ioxy    |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | diags3d01 | net primary production small phytoplankton                  | mmolC m-3 day-1 |         |
+   | diags3d01 | net primary production by nanophytoplankton                 | mmolC m-3 day-1 |         |
    +-----------+-------------------------------------------------------------+-----------------+---------+
-   | diags3d02 | net primary production diatoms                              | mmolC m-3 day-1 |         |
+   | diags3d02 | net primary production by diatoms                           | mmolC m-3 day-1 |         |
    +-----------+-------------------------------------------------------------+-----------------+---------+
    | diags3d03 | gross primary production small phytoplankton                | mmolC m-3 day-1 |         |
    +-----------+-------------------------------------------------------------+-----------------+---------+
