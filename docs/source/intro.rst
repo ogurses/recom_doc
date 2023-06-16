@@ -622,7 +622,7 @@ nanophytoplankton:
    
    Z = \psi \cdot p_{phy} \cdot \mathrm{C}_{phy} 
 
-$\psi$ is the calcite production ratio that incorporates the ratio of
+:math:`\psi` is the calcite production ratio that incorporates the ratio of
 calcium carbonate producers to total nanophytoplankton and the :math:`CaCO_3`:POC
 ratio in coccolithophorids. The latter is assumed to be 1.  
 
@@ -829,7 +829,7 @@ The silica dissolution rate :math:`\rho_{Si}^T` follows the temperature dependen
 \paragraph{Calcium carbonate pool (:math:`\mathrm{CaCO}_{3\,det}`)}
 Nanophytoplankton loses :math:`CaCO_3` to the detrital :math:`CaCO_3` compartment
 via excretion, respiration, aggregation and grazing. Dissolution of
-:math:`CaCO$_3` leads to an increase in :math:`\mathrm{DIC}` and alkalinity (see section
+:math:`CaCO_3` leads to an increase in :math:`\mathrm{DIC}` and alkalinity (see section
 :ref:`sec_carbchem`). 
 
 .. math::
@@ -900,7 +900,7 @@ function (:math:`f_T`, see Eq. :eq:`eq_arr`).
 Dissolved Organic Carbon (:math:`\mathrm{DOC}`)
 -----------------------------------------------
 
-$\mathrm{DOC}$ sources are carbon excretion by nanophytoplankton, diatoms and
+:math:`\mathrm{DOC}` sources are carbon excretion by nanophytoplankton, diatoms and
 heterotrophs, and degradation of :math:`\mathrm{C}_{det}`. Remineralization of :math:`\mathrm{DOC}` leads
 to a transfer of carbon from :math:`\mathrm{DOC}` to :math:`\mathrm{DIC}`.
 
