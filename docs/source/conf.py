@@ -57,3 +57,6 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_css_files = ['conf.css']
 
+# load mathjax so render math in 'HTML-CSS' which is searchable in browser
+mathjax_path = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+
